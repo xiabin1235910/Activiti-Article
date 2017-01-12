@@ -1,4 +1,4 @@
-# How to define our own user & group management in activiti
+# How to define our own user & group management in Activiti
 
 We study how to use own user management in activiti for a while. So let me start to introduce how we implement it.
 
