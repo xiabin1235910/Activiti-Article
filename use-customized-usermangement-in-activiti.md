@@ -42,7 +42,7 @@ public class OwnUserManagerFactory implements SessionFactory {
 }
 ```
 
-```
+```java
 public class OwnGroupMagagerFactory implements SessionFactory {
 
 	private KeystoneConnection keystoneConnection;
@@ -74,7 +74,7 @@ public class OwnGroupMagagerFactory implements SessionFactory {
 
 >Then, We must define the class **OwnUserManager & OwnGroupManager** which extend the class --- **UserEntityManager**. And we have to implement our own query logic in **在findUserByQueryCriteria中**. Any communication with other user management of third party can be used.
 
-```
+```java
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.Page;
@@ -152,7 +152,7 @@ public class OwnUserManager extends UserEntityManager {
 
 >>The method --- checkPassword --- returns true, means to skip the user verification
 
-```
+```java
 public class OwnGroupManager extends GroupEntityManager {
 	
 	private KeystoneConnection keystoneConnection;
@@ -209,7 +209,7 @@ public class OwnGroupManager extends GroupEntityManager {
 
 >Furthermore, build the 'KeystoneConnection', of course, it can be any other user configuration POJO.
 
-```
+```java
 public class KeystoneConnection {
 	
 	private String protocal;
@@ -239,12 +239,12 @@ public class KeystoneConnection {
 >At last, we must tell the activiti engine, how to identify the two Factory class we have defined in the first step. Of course, it is the process of registration. So we extend the class **ActivitiEngineConfiguration** in the 'activiti-webapp-rest2' module.
 Or it will also nicely configure them in spring configuration xml.
 
-```
+```java
 @Configuration
 public class ActivitiEngineConfiguration
 ```
 
-```
+```java
 @Bean(name = "processEngineConfiguration")
 	public ProcessEngineConfigurationImpl processEngineConfiguration() {
 		SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
@@ -258,12 +258,13 @@ public class ActivitiEngineConfiguration
 		return processEngineConfiguration;
 	}
 ```
-**Conclusion**：
+**Conclusion：**
+
 **The reason is very simple, the 'SessionFactory' in the Activiti Engine maintains a specific data structure below**
 
-```
+```java
 HashMap<SessionType, Session>
 ```
 
 **So the two sub-SessionFactory classes we registered will cover the old ones which are loaded when the activiti engine started**
-**And then, it is definitely that the engine will read our own management Factory every time**
+**And then, it is definitely that the engine will read our own management Factory every time.**
