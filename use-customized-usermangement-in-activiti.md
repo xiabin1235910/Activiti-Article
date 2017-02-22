@@ -267,4 +267,5 @@ HashMap<SessionType, Session>
 ```
 
 **So the two sub-SessionFactory classes we registered will cover the old ones which are loaded when the activiti engine started**
+
 **And then, it is definitely that the engine will read our own management Factory every time.**
